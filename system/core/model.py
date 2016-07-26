@@ -10,5 +10,5 @@ from flask.ext.bcrypt import Bcrypt
 
 class Model(object):
     def __init__(self):
-        self.db = current_app.db
+        # self.db = current_app.db
         self.bcrypt = Bcrypt(current_app)
