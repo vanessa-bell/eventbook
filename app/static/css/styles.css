@@ -37,3 +37,23 @@
 	align-content: center;
 }
 
+.row {
+  vertical-align: top;
+}
+
+#map {
+  padding: 20px;
+}
+
+#events {
+  overflow: auto;
+}
+button {
+  margin-top: 10px;
+}
+
+.error {
+  background-color: red;
+  color: white;
+  text-align: center;
+}

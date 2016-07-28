@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="static/css/styles.css" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Recommended Concerts</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 75%;
+      }
+    </style>
+
+  
+
+ </head>
+  <body>
+  <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">EventBook</a>
+          </div>
+
+         
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="inactive"><a href="/home">Home <span class="sr-only">(current)</span></a></li>
+              <li class="inactive"><a href="/favorites">Favorites <span class="sr-only">(current)</span></a></li>
+              <li class="inactive"><a href="/concert-mapper">Concert Mapper <span class="sr-only">(current)</span></a></li>
+              <li class="inactive"><a href="/profile">Profile<span class="sr-only">(current)</span></a></li>
+                <li><p class="navbar-text">Your Location: San Jose</p></li>
+                
+              </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search Events">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            
+          </div>
+        </div>
+      </nav>
+      <div class='container-fluid'>
+      <div id='main' class='row'>
+      <div class='col-md-offset-3'><h1>Upcoming Concerts Recommended For You</h1></div>
+      </div>
+    
+
+    <div id="main" class="row">
+    <div class="col-md-5 col-md-offset-1" id='events' style="overflow-y: scroll; height:600px;">
+          
+            <div id='event'>
+            {%if jData%}
+            {%for x in range(0,length)%}
+
+              <h3>{{jData[x]['title']}}</h3>
+              {%if jData[x]['artists'][0]['image_url'] %}
+                <img src="{{jData[x]['artists'][0]['image_url']}}" class="img-thumbnail" alt="img">
+              {%endif%}
+              {%if jData[x]['artists'][0]['website'] %}
+                <p><a href="{{jData[x]['artists'][0]['website']}}">{{jData[x]['artists'][0]['name']}}'s Website</a></p>
+              {%endif%}
+              <h4>{{jData[x]['formatted_datetime']}}</h4>
+              
+              
+              <p>Ticket Status: {{jData[x]['ticket_status']}}</p>
+
+              <p><a class="btn btn-primary" href="/add-favorite" role="button">Add to Favorites</a></p>
+              
+              {%endfor%}
+             {%endif%}
+            
+            </div>
+        </div>
+
+    <div class='col-md-7' id='map' style="width:500px;height:380px;"></div>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: {lat: 37.7749, lng: -122.4194}
+        });
+
+        setMarkers(map);
+      }
+
+      // Data for the markers consisting of a name, a LatLng and a zIndex for the
+      // order in which these markers should display on top of each other.
+      var beaches = [
+        
+        
+        ['{{results[0][0]}}', {{results[0][1]}}, {{results[0][2]}}, 2],
+        ['{{results[1][0]}}', {{results[1][1]}}, {{results[1][2]}}, 1]
+      ];
+     
+
+      function setMarkers(map) {
+        // Adds markers to the map.
+
+        // Marker sizes are expressed as a Size of X,Y where the origin of the image
+        // (0,0) is located in the top left of the image.
+
+        // Origins, anchor positions and coordinates of the marker increase in the X
+        // direction to the right and in the Y direction down.
+        var image = {
+          url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+          // This marker is 20 pixels wide by 32 pixels high.
+          size: new google.maps.Size(20, 32),
+          // The origin for this image is (0, 0).
+          origin: new google.maps.Point(0, 0),
+          // The anchor for this image is the base of the flagpole at (0, 32).
+          anchor: new google.maps.Point(0, 32)
+        };
+        // Shapes define the clickable region of the icon. The type defines an HTML
+        // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+        // The final coordinate closes the poly by connecting to the first coordinate.
+        var shape = {
+          coords: [1, 1, 1, 20, 18, 20, 18, 1],
+          type: 'poly'
+        };
+        for (var i = 0; i < beaches.length; i++) {
+          var beach = beaches[i];
+          var marker = new google.maps.Marker({
+            position: {lat: beach[1], lng: beach[2]},
+            map: map,
+            icon: image,
+            shape: shape,
+            title: beach[0],
+            zIndex: beach[3]
+          });
+          
+        }
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrcHfjKUgbooOdsxi-dPuJPW6m6OX575s&callback=initMap">
+    </script>
+      
+      </div>
+    </div>
+
+  
+  </body>
+</html>

@@ -13,7 +13,7 @@
   
     
   
-	  <title>Profile</title>
+	  <title>Concert Mapper</title>
 	  
   </head>
   <body >
@@ -37,8 +37,8 @@
             <ul class="nav navbar-nav">
               <li class="inactive"><a href="/home">Home <span class="sr-only">(current)</span></a></li>
               <li class="inactive"><a href="/favorites">Favorites <span class="sr-only">(current)</span></a></li>
-              <li class="inactive"><a href="/concert-mapper">Concert Mapper <span class="sr-only">(current)</span></a></li>
-              <li class="active"><a href="/profile">Profile<span class="sr-only">(current)</span></a></li>
+              <li class="active"><a href="/concert-mapper">Concert Mapper <span class="sr-only">(current)</span></a></li>
+              <li class="inactive"><a href="/profile">Profile<span class="sr-only">(current)</span></a></li>
                 <li><p class="navbar-text">Your Location: San Jose</p></li>
                 
               </li>
@@ -49,7 +49,7 @@
       </nav>
      
       <div id="main" class="row">
-	  		<form action='' method='POST' class='col-md-4 col-md-offset-4'>
+	  		<form action='/search-results' method='POST' class='col-md-4 col-md-offset-4'>
           <div class='form-group'>
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -59,11 +59,16 @@
               {% endfor %}
             {% endif %}
           {% endwith %}
-            <h3>Update your Profile</h3>
+            <h3>Search for upcoming concerts:</h3>
+            <label for="artist">One of your Favorite Musical Artists:</label>
+            <input type="text" name="artist" class='form-control'>
             <label for="location">Your Location:</label>
             <input type="text" name="location" class='form-control'>
-            
-            <button type='submit' class='btn btn-success'>Update Profile</button>
+            <label for="radius">Radius (in miles):</label>
+            <input type="number" name="radius" class='form-control'>
+            <label for=date_range>Date Range:</label>
+            <input type="date" name="start_date" class='form-control'> to <input type="date" name="end_date" class='form-control'>
+            <button type='submit' class='btn btn-success'>Show me recommended concerts!</button>
           </div>
         </form>
           
