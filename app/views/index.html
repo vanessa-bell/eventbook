@@ -10,7 +10,7 @@
 
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	  <title>EventBook</title>
+	  <title>BandExplorer</title>
 	  
   </head>
   <body>
@@ -19,8 +19,11 @@
 
   	<div class='container-fluid'>
 	  	<div id="header" class="row">
-	  		<div class="col-m-2 col-md-offset-5">
-		    <h1>EventBook</h1>
+	  		<div class="col-m-2 col-md-offset-4">
+		    <h1>Welcome to BandExplorer!</h1>
+		    <div class="col-m-2 col-md-offset-1">
+		    	<p>If you'd like to save your favorites, register or login. </p><p>If not, <a href='/discover'>click here</a> to discover bands you might like to see!</p>
+		    </div>
 		    </div>
 		</div>
 		<div id="form" class="row">
@@ -55,6 +58,11 @@
 				    		<input type="text" class="form-control" id="last_name">
 				    	</fieldset>
 				    	<fieldset class="form-group">
+				    		<label for="location">Your location (e.g. San Francisco, CA)</label>
+				    		<input type="text" class="form-control" id="location">
+				    	</fieldset>
+
+				    	<fieldset class="form-group">
 				    		<label for="email">Email</label>
 				    		<input type="email" class="form-control" id="email">
 				    	</fieldset>
@@ -71,20 +79,6 @@
 				 
 				    </form>
 			   		</div>
-			</div>
-		
-		<div id="alt-login" class="row">
-			<div id="or" class="col-md-offset-5">
-				<h3>OR</h3>
-				<p>Login with Facebook!</p>
-				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-​
-		<div id="status">
-		</div>
-​
-		<!-- <button onclick="login()">Login with your Facebook Account</button>	 -->
-​
-
 			</div>
 		
 	</div>

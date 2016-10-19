@@ -13,7 +13,14 @@
   
     
   
-	  <title>Concert Mapper</title>
+	  <title>Discover</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
 	  
   </head>
   <body >
@@ -21,7 +28,7 @@
 	  	
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
+          
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
               <span class="sr-only">Toggle navigation</span>
@@ -29,25 +36,25 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">EventBook</a>
+            <a class="navbar-brand" href="#">BandExplorer</a>
           </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
+         
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="inactive"><a href="/home">Home <span class="sr-only">(current)</span></a></li>
-              <li class="inactive"><a href="/favorites">Favorites <span class="sr-only">(current)</span></a></li>
-              <li class="active"><a href="/concert-mapper">Concert Mapper <span class="sr-only">(current)</span></a></li>
+              <!-- <li class="inactive"><a href="/home">Home <span class="sr-only">(current)</span></a></li>
+              <li class="inactive"><a href="/favorites">Favorites <span class="sr-only">(current)</span></a></li> -->
+              <li class="active"><a href="/discover">Discover <span class="sr-only">(current)</span></a></li>
               <li class="inactive"><a href="/profile">Profile<span class="sr-only">(current)</span></a></li>
-                <li><p class="navbar-text">Your Location: San Jose</p></li>
+                <li><p class="navbar-text">Your Location: {{session['location']}}</p></li>
                 
               </li>
             </ul>
             
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+          </div>
+        </div>
       </nav>
-     
+     <div class="container-fluid">
       <div id="main" class="row">
 	  		<form action='/search-results' method='POST' class='col-md-4 col-md-offset-4'>
           <div class='form-group'>
@@ -60,23 +67,22 @@
             {% endif %}
           {% endwith %}
             <h3>Search for upcoming concerts:</h3>
+            <br>
             <label for="artist">One of your Favorite Musical Artists:</label>
             <input type="text" name="artist" class='form-control'>
+            <br>
             <label for="location">Your Location:</label>
-            <input type="text" name="location" class='form-control'>
+            <input type="text" name="location" class='form-control' value="{{session['location']}}">
+            <br>
             <label for="radius">Radius (in miles):</label>
-            <input type="number" name="radius" class='form-control'>
-            <label for=date_range>Date Range:</label>
-            <input type="date" name="start_date" class='form-control'> to <input type="date" name="end_date" class='form-control'>
+            <input type="number" name="radius" class='form-control' value="50">
+            <br>
             <button type='submit' class='btn btn-success'>Show me recommended concerts!</button>
           </div>
         </form>
-          
-          
-            
 
 		  </div>
-
+  </div>
 	</div>
   </body>
 </html>

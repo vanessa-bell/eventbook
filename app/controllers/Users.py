@@ -8,10 +8,13 @@ class Users(Controller):
         # self.db = self._app.db
    
     def index(self):
-        
         return self.load_view('index.html')
 
     def home(self):
+        return self.load_view('home.html')
+
+    def register(self, methods="POST"):
+        session['location'] = request.form['location']
         return self.load_view('home.html')
 
     def event(self):
@@ -28,26 +31,32 @@ class Users(Controller):
     def profile(self):
         return self.load_view('profile.html')
 
-    def concertmapper(self):
-        return self.load_view('concert-mapper.html')
+    def discover(self):
+        return self.load_view('discover.html')
+
+    def updatelocation(self,methods="POST"):
+        session['location'] = request.form['location']
+        return self.load_view('profile.html')
 
     def search(self,methods="POST"):
-        artist= request.form['artist']
+        if not request.form['artist']:
+            flash('Please input an artist name','error')
+            return redirect('/discover')
+        artist = request.form['artist']
         location = request.form['location']
         radius = request.form['radius']
-        start_date = request.form['start_date']
-        end_date = request.form['end_date']
         print "successful form submission"
-        url2 = 'http://api.bandsintown.com/artists/' + artist + '/events/recommended?location=' + location + '&date=' +start_date+','+end_date+'&radius=' + radius + '&app_id=eventbook&api_version=2.0&format=json'
+        url2 = 'http://api.bandsintown.com/artists/' + artist + '/events/recommended?location=' + location +'&radius=' + radius + '&app_id=eventbook&api_version=2.0&format=json'
         r = requests.get(url2)
         
         jData = json.loads(r.content)
         length = len(jData)
         
         
+        
         if not jData:
             flash('Sorry, there are no results for that artist with your criteria. Please try again!','error')
-            return redirect('/concert-mapper')
+            return redirect('/discover')
         else:       
             results = []
             for i in range(0,length):
